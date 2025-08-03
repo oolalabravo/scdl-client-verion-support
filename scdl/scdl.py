@@ -9,7 +9,7 @@ Usage:
     [--original-name][--original-metadata][--no-original][--only-original]
     [--name-format <format>][--strict-playlist][--playlist-name-format <format>]
     [--client-id <id>][--auth-token <token>][--overwrite][--no-playlist][--opus]
-    [--add-description]
+    [--add-description][--get-clientID]
 
     scdl -h | --help
     scdl --version
@@ -435,6 +435,7 @@ def main() -> None:
             logger.error('Error while fetching client ID')
         else:
             logger.info(f"Your current SoundCloud Client ID is: {client_ID}")
+            sys.exit(0)
 
 
     # convert arguments dict to python_args (kwargs-friendly args)
