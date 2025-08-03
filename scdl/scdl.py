@@ -72,6 +72,7 @@ Options:
     --no-playlist                   Skip downloading playlists
     --add-description               Adds the description to a separate txt file
     --opus                          Prefer downloading opus streams over mp3 streams
+    --get-clientID                  Get the client ID of user to download personal or resticted songs
 """
 
 import atexit
@@ -426,6 +427,14 @@ def main() -> None:
         except Exception:
             logger.error(f"Invalid sync archive file {arguments['--sync']}")
             sys.exit(1)
+
+    if arguments['--get-clientID']:
+        client_ID = utils.get_client_id()
+        if client_ID == 'error':
+            logger.error('Error while fetching client ID')
+        else:
+            logger.info(f"Your current SoundCloud Client ID is: {client_ID}")
+
 
     # convert arguments dict to python_args (kwargs-friendly args)
     python_args = {}

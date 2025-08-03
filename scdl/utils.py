@@ -9,6 +9,7 @@ from types import MappingProxyType
 from typing import Dict, Optional
 
 from termcolor import colored
+import requests
 
 __all__ = ("ColorizeFilter",)
 
@@ -81,3 +82,14 @@ def parse_header(content_disposition: Optional[str]) -> Dict[str, str]:
     message = email.message.Message()
     message["content-type"] = content_disposition
     return dict(message.get_params({}))
+
+def get_client_id():
+    homepage = requests.get("https://soundcloud.com").text
+    js_urls = re.findall(r'src="(https://a-v2\.sndcdn\.com/assets/\w+-\w+\.js)"', homepage)
+
+    for js_url in js_urls:
+        js_code = requests.get(js_url).text
+        client_ids = re.findall(r'client_id\s*:\s*"(\w+)"', js_code)
+        if client_ids:
+            return client_ids[0]
+    return 'error'
