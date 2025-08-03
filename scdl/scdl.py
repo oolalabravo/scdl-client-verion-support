@@ -311,6 +311,14 @@ def main() -> None:
     # Parse arguments
     arguments = docopt(__doc__, version=__version__)
 
+    if arguments['--get-clientID']:
+        client_ID = utils.get_client_id()
+        if client_ID == 'error':
+            logger.error('Error while fetching client ID')
+        else:
+            logger.info(f"Your current SoundCloud Client ID is: {client_ID}")
+            sys.exit(0)
+            
     if arguments["--debug"]:
         logger.level = logging.DEBUG
     elif arguments["--error"]:
@@ -429,13 +437,7 @@ def main() -> None:
             logger.error(f"Invalid sync archive file {arguments['--sync']}")
             sys.exit(1)
 
-    if arguments['--get-clientID']:
-        client_ID = utils.get_client_id()
-        if client_ID == 'error':
-            logger.error('Error while fetching client ID')
-        else:
-            logger.info(f"Your current SoundCloud Client ID is: {client_ID}")
-            sys.exit(0)
+
 
 
     # convert arguments dict to python_args (kwargs-friendly args)
