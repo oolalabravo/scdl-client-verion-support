@@ -164,6 +164,7 @@ class SCDLArgs(TypedDict):
     f: bool
     flac: bool
     force_metadata: bool
+    get_clientID: bool
     hide_progress: bool
     hidewarnings: bool
     l: str  # noqa: E741
